@@ -1,4 +1,4 @@
-package org.xoelrp.example.game_panel;
+package org.xoelrp.pong.game_panel;
 
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;

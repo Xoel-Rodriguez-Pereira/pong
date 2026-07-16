@@ -37,15 +37,15 @@ java {
 
 application {
     // Define the main class for the application.
-    mainClass = 'org.xoelrp.example.App'
+    mainClass = 'org.xoelrp.pong.App'
 }
 
 task fatJar(type: Jar) {
     manifest {
-        attributes 'Main-Class' : 'org.xoelrp.example.App',
-                   'Package-Title' : 'example-java',
-                   'Package-Version': '1.0',
-                   'Specification-Title' : 'example java'
+        attributes 'Main-Class' : 'org.xoelrp.pong.App',
+                   'Package-Title' : 'pong-java',
+                   'Package-Version': '1.0-SNAPSHOT',
+                   'Specification-Title' : 'pong java'
     }
     duplicatesStrategy = DuplicatesStrategy.INCLUDE
     from { configurations.compileClasspath.collect { it.isDirectory() ? it : zipTree(it) } }
@@ -54,7 +54,7 @@ task fatJar(type: Jar) {
 
 group = 'org.xoelrp'
 version = '1.0'
-description = 'Motor basico para juegos'
+description = 'Recracion de pong'
 java.sourceCompatibility = JavaVersion.VERSION_21
 
 
