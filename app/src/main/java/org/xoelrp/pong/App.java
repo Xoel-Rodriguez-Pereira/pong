@@ -11,9 +11,9 @@ public class App {
 
     public static void main(String[] args) {
         
-        JFrame window = new JFrame("Ventana");
+        JFrame window = new JFrame("Pong");
         window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        window.setResizable(true);
+        window.setResizable(false);
 
         // Add GamePanel to the window
         GamePanel gamePanel = new GamePanel();

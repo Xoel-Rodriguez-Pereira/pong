@@ -8,8 +8,8 @@ import java.awt.Graphics2D;
 import javax.swing.JPanel;
 
 public class GamePanel extends JPanel implements Runnable {
-    final static private Integer HEIGHT = JPanel.HEIGHT;
-    final static private Integer WIDTH =  JPanel.WIDTH;
+    static Integer HEIGHT = 720;
+    static Integer WIDTH =  1280;
 
     final private Integer objetiveFPS = 60;
     Thread gameThread;
