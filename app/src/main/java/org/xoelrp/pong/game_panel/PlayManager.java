@@ -47,10 +47,11 @@ public class PlayManager {
         rightPaddle = new Paddle(right_x - 50, 1);
 
         // Ball
-        ball = new Ball(right_x / 2);
+        ball = new Ball();
         ballSpeed = 3;
         verticalDir = 1;
         horizonalDir = -1;
+        ball.setXY(right_x / 2 + 5 * horizonalDir, bottom_y / 2);
 
         // Score
         leftScore = 0;
@@ -77,6 +78,7 @@ public class PlayManager {
             KeyHandler.downKeyPress = false;
         } else {KeyHandler.downKeyPress = false;}
 
+        bounceBall();
         ball.updateXY(ballSpeed * horizonalDir, ballSpeed * verticalDir);
     } 
     
@@ -102,8 +104,9 @@ public class PlayManager {
             RPTopColision = false;
             RPBottomColision = false;
         }
+    }
 
-        // Ball
+    public void bounceBall() {
         // Vertical
         if (ball.y - ball.d/2 - ballSpeed < top_y) {
             verticalDir = 1;
@@ -124,16 +127,16 @@ public class PlayManager {
             ballSpeed += 1;
         }
             // Against border
-        if (ball.x + ball.d + ballSpeed > right_x) {
+        if (ball.x + ball.d > right_x) {
             horizonalDir = -1;
             ballSpeed = 3;
             leftScore += 1;
-            ball.setXY(right_x / 2, PlayManager.HEIGHT / 2);
-        } else if (ball.x - ball.d/2 - ballSpeed < left_x) {
+            ball.setXY(right_x / 2 + 5 * horizonalDir, bottom_y / 2);
+        } else if (ball.x - ball.d/2 < left_x) {
             horizonalDir = 1;
             ballSpeed = 3;
             rightScore += 1;
-            ball.setXY(right_x / 2, PlayManager.HEIGHT / 2);
+            ball.setXY(right_x / 2 + 5 * horizonalDir, bottom_y / 2);
         }
     }
 

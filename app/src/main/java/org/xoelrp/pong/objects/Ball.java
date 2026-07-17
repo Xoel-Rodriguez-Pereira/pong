@@ -12,10 +12,7 @@ public class Ball {
     public int side;
     public Color color = Color.WHITE;
 
-    public Ball(int x) {
-        this.x = x;
-        this.y = PlayManager.HEIGHT / 2;
-    }
+    public Ball() {}
     
     public void setXY(int x, int y) {
         this.x = x;
