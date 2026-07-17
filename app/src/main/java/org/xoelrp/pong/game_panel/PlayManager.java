@@ -4,6 +4,7 @@ import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Graphics2D;
 
+import org.xoelrp.pong.objects.Ball;
 import org.xoelrp.pong.objects.Paddle;
 
 public class PlayManager {
@@ -21,6 +22,9 @@ public class PlayManager {
     public static boolean LPTopColision, LPBottomColision, RPTopColision, RPBottomColision;
 
     public int movement;
+    public Ball ball;
+
+    public int ballSpeed;
 
     public PlayManager() {
         left_x = 0;
@@ -35,6 +39,10 @@ public class PlayManager {
 
         // Right paddle
         rightPaddle = new Paddle(right_x - 50, 1);
+
+        // Ball
+        ball = new Ball(right_x / 2);
+        ballSpeed = 3;
     }
 
     public void update() {
@@ -56,6 +64,8 @@ public class PlayManager {
             rightPaddle.updateY(movement);
             KeyHandler.downKeyPress = false;
         } else {KeyHandler.downKeyPress = false;}
+
+        ball.updateXY(ballSpeed, ballSpeed);
     } 
     
     public void checkColision() {
@@ -95,6 +105,11 @@ public class PlayManager {
         }
         if (rightPaddle != null) {
             rightPaddle.draw(g2);
+        }
+
+        // Draw ball
+        if (ball != null) {
+            ball.draw(g2);
         }
     }
 }
