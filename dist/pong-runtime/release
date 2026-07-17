@@ -1,2 +1,2 @@
 JAVA_VERSION="21.0.9"
-MODULES="java.base java.datatransfer java.xml java.prefs java.desktop org.xoelrp.pong"
+MODULES="java.base java.datatransfer java.xml java.prefs java.desktop jdk.random org.xoelrp.pong"
