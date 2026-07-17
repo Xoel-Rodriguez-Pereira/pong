@@ -25,6 +25,8 @@ public class PlayManager {
     public Ball ball;
 
     public int ballSpeed;
+    public int verticalDir;
+    public int horizonalDir;
 
     public PlayManager() {
         left_x = 0;
@@ -43,6 +45,8 @@ public class PlayManager {
         // Ball
         ball = new Ball(right_x / 2);
         ballSpeed = 3;
+        verticalDir = 1;
+        horizonalDir = -1;
     }
 
     public void update() {
@@ -65,7 +69,7 @@ public class PlayManager {
             KeyHandler.downKeyPress = false;
         } else {KeyHandler.downKeyPress = false;}
 
-        ball.updateXY(ballSpeed, ballSpeed);
+        ball.updateXY(ballSpeed * horizonalDir, ballSpeed * verticalDir);
     } 
     
     public void checkColision() {
@@ -89,6 +93,27 @@ public class PlayManager {
         } else { 
             RPTopColision = false;
             RPBottomColision = false;
+        }
+
+        // Ball
+        // Vertical
+        if (ball.y - ball.d/2 - ballSpeed < top_y) {
+            verticalDir = 1;
+        } else if (ball.y + ball.d/2 + ballSpeed > bottom_y) {
+            verticalDir = -1;
+        }
+        // Horizontal
+            // Against paddle
+        if (ball.x + ball.d + ballSpeed > rightPaddle.x 
+                    & ball.y >= rightPaddle.y 
+                    & ball.y <= rightPaddle.y + rightPaddle.HEIGHT) {
+            horizonalDir = -1;
+            ballSpeed += 1;
+        } else if (ball.x - ball.d/2 - ballSpeed < leftPaddle.x + leftPaddle.WIDTH
+                    & ball.y >= leftPaddle.y 
+                    & ball.y <= leftPaddle.y + leftPaddle.HEIGHT) {
+            horizonalDir = 1;
+            ballSpeed += 1;
         }
     }
 
