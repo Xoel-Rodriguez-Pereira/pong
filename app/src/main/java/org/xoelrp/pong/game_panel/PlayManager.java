@@ -16,11 +16,17 @@ public class PlayManager {
     public Paddle leftPaddle;
     public Paddle rightPaddle;
 
+    public static boolean LPTopColision, LPBottomColision, RPTopColision, RPBottomColision;
+
+    public int movement;
+
     public PlayManager() {
         left_x = 0;
         right_x = left_x + WIDTH;
         top_y = 0;
         bottom_y = top_y + HEIGHT;
+
+        movement = HEIGHT / 20;
 
         // Left paddle
         leftPaddle = new Paddle(50, -1);
@@ -30,8 +36,49 @@ public class PlayManager {
     }
 
     public void update() {
+        checkColision();
+
+        if (KeyHandler.wKeyPress & !LPTopColision) {
+            leftPaddle.updateY(-movement);
+            KeyHandler.wKeyPress = false;
+        } else {KeyHandler.wKeyPress = false;}
+        if (KeyHandler.sKeyPress & !LPBottomColision) {
+            leftPaddle.updateY(movement);
+            KeyHandler.sKeyPress = false;
+        } else {KeyHandler.sKeyPress = false;}
+        if (KeyHandler.upKeyPress & !RPTopColision) {
+            rightPaddle.updateY(-movement);
+            KeyHandler.upKeyPress = false;
+        } else {KeyHandler.upKeyPress = false;}
+        if (KeyHandler.downKeyPress & !RPBottomColision) {
+            rightPaddle.updateY(movement);
+            KeyHandler.downKeyPress = false;
+        } else {KeyHandler.downKeyPress = false;}
     } 
     
+    public void checkColision() {
+        // Left Paddle
+        if (leftPaddle.y - movement < top_y) {
+            LPTopColision = true;
+        } else if (leftPaddle.y + leftPaddle.HEIGHT + movement > bottom_y) {
+            LPBottomColision = true;
+            LPTopColision = false;
+        } else { 
+            LPTopColision = false;
+            LPBottomColision = false;
+        }
+
+        // Right Paddle
+        if (rightPaddle.y - movement < top_y) {
+            RPTopColision = true;
+        } else if (rightPaddle.y + rightPaddle.HEIGHT + movement > bottom_y) {
+            RPBottomColision = true;
+            RPTopColision = false;
+        } else { 
+            RPTopColision = false;
+            RPBottomColision = false;
+        }
+    }
 
     public void draw(Graphics2D g2) {
         // Draw paddles

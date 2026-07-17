@@ -19,6 +19,10 @@ public class Paddle extends Rectangle {
         this.side = side;
     }
 
+    public void updateY(int movement) {
+        this.y += movement;
+    }
+
     public void draw(Graphics2D g2) {
         g2.setColor(color);
         g2.fillRect(x - (WIDTH / 2 + (WIDTH / 2) * side), y, WIDTH, HEIGHT);
