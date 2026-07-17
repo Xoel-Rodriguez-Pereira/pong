@@ -16,7 +16,11 @@ public class Ball {
         this.x = x;
         this.y = PlayManager.HEIGHT / 2;
     }
-
+    
+    public void setXY(int x, int y) {
+        this.x = x;
+        this.y = y;
+    }
     public void updateXY(int xSpeed, int ySpeed) {
         this.x += xSpeed;
         this.y += ySpeed;

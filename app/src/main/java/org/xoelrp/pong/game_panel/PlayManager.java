@@ -28,6 +28,9 @@ public class PlayManager {
     public int verticalDir;
     public int horizonalDir;
 
+    private int leftScore;
+    private int rightScore;
+
     public PlayManager() {
         left_x = 0;
         right_x = left_x + WIDTH;
@@ -47,6 +50,10 @@ public class PlayManager {
         ballSpeed = 3;
         verticalDir = 1;
         horizonalDir = -1;
+
+        // Score
+        leftScore = 0;
+        rightScore = 0;
     }
 
     public void update() {
@@ -115,6 +122,18 @@ public class PlayManager {
             horizonalDir = 1;
             ballSpeed += 1;
         }
+            // Against border
+        if (ball.x + ball.d + ballSpeed > right_x) {
+            horizonalDir = -1;
+            ballSpeed = 3;
+            leftScore += 1;
+            ball.setXY(right_x / 2, PlayManager.HEIGHT / 2);
+        } else if (ball.x - ball.d/2 - ballSpeed < left_x) {
+            horizonalDir = 1;
+            ballSpeed = 3;
+            rightScore += 1;
+            ball.setXY(right_x / 2, PlayManager.HEIGHT / 2);
+        }
     }
 
     public void draw(Graphics2D g2) {
@@ -136,5 +155,9 @@ public class PlayManager {
         if (ball != null) {
             ball.draw(g2);
         }
+
+        // Draw scores
+        g2.drawString("%d".formatted(leftScore), right_x / 4, bottom_y / 40);
+        g2.drawString("%d".formatted(rightScore), right_x / 4 * 3, bottom_y / 40);
     }
 }
