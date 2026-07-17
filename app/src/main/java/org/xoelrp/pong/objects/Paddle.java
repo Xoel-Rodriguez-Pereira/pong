@@ -8,14 +8,14 @@ import org.xoelrp.pong.game_panel.PlayManager;
 
 public class Paddle extends Rectangle {
     public int x, y;
-    public int HEIGHT = 150;
+    public int HEIGHT = (PlayManager.HEIGHT / 20) * 4;
     public int WIDTH = 15;
     public int side;
     public Color color = Color.WHITE;
 
     public Paddle(int x, int side) {
         this.x = x;
-        this.y = PlayManager.HEIGHT / 2 - HEIGHT / 2;
+        this.y = PlayManager.HEIGHT / 2;
         this.side = side;
     }
 
