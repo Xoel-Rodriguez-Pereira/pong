@@ -2,6 +2,7 @@ package org.xoelrp.pong.game_panel;
 
 import java.awt.BasicStroke;
 import java.awt.Color;
+import java.awt.Font;
 import java.awt.Graphics2D;
 
 import org.xoelrp.pong.objects.Ball;
@@ -157,7 +158,8 @@ public class PlayManager {
         }
 
         // Draw scores
-        g2.drawString("%d".formatted(leftScore), right_x / 4, bottom_y / 40);
-        g2.drawString("%d".formatted(rightScore), right_x / 4 * 3, bottom_y / 40);
+        g2.setFont(new Font("", Font.BOLD, 40));
+        g2.drawString("%d".formatted(leftScore), right_x / 4, bottom_y / 40 + 20);
+        g2.drawString("%d".formatted(rightScore), right_x / 4 * 3, bottom_y / 40 + 20);
     }
 }
