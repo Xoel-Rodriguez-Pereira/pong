@@ -59,27 +59,29 @@ public class PlayManager {
     }
 
     public void update() {
-        checkColision();
+        if (!KeyHandler.paused) {
+            checkColision();
 
-        if (KeyHandler.wKeyPress & !LPTopColision) {
-            leftPaddle.updateY(-movement);
-            KeyHandler.wKeyPress = false;
-        } else {KeyHandler.wKeyPress = false;}
-        if (KeyHandler.sKeyPress & !LPBottomColision) {
-            leftPaddle.updateY(movement);
-            KeyHandler.sKeyPress = false;
-        } else {KeyHandler.sKeyPress = false;}
-        if (KeyHandler.upKeyPress & !RPTopColision) {
-            rightPaddle.updateY(-movement);
-            KeyHandler.upKeyPress = false;
-        } else {KeyHandler.upKeyPress = false;}
-        if (KeyHandler.downKeyPress & !RPBottomColision) {
-            rightPaddle.updateY(movement);
-            KeyHandler.downKeyPress = false;
-        } else {KeyHandler.downKeyPress = false;}
+            if (KeyHandler.wKeyPress & !LPTopColision) {
+                leftPaddle.updateY(-movement);
+                KeyHandler.wKeyPress = false;
+            } else {KeyHandler.wKeyPress = false;}
+            if (KeyHandler.sKeyPress & !LPBottomColision) {
+                leftPaddle.updateY(movement);
+                KeyHandler.sKeyPress = false;
+            } else {KeyHandler.sKeyPress = false;}
+            if (KeyHandler.upKeyPress & !RPTopColision) {
+                rightPaddle.updateY(-movement);
+                KeyHandler.upKeyPress = false;
+            } else {KeyHandler.upKeyPress = false;}
+            if (KeyHandler.downKeyPress & !RPBottomColision) {
+                rightPaddle.updateY(movement);
+                KeyHandler.downKeyPress = false;
+            } else {KeyHandler.downKeyPress = false;}
 
-        bounceBall();
-        ball.updateXY(ballSpeed * horizonalDir, ballSpeed * verticalDir);
+            bounceBall();
+            ball.updateXY(ballSpeed * horizonalDir, ballSpeed * verticalDir);
+        }
     } 
     
     public void checkColision() {
@@ -164,5 +166,12 @@ public class PlayManager {
         g2.setFont(new Font("", Font.BOLD, 40));
         g2.drawString("%d".formatted(leftScore), right_x / 4, bottom_y / 40 + 20);
         g2.drawString("%d".formatted(rightScore), right_x / 4 * 3, bottom_y / 40 + 20);
+
+        // Draw pause
+        if (KeyHandler.paused) {
+            g2.setColor(Color.YELLOW);
+            g2.setFont(new Font("Arial", Font.BOLD, 100));
+            g2.drawString("PAUSED", right_x / 3 + 4, bottom_y / 2);
+        }
     }
 }
