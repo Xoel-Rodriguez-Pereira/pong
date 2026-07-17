@@ -7,7 +7,7 @@ import java.awt.Graphics2D;
 public class MainMenu {
     int right_x, bottom_y;
     public boolean selected;
-    public boolean siglePlayer;
+    static public boolean siglePlayer;
     int currentOption = 0;
 
     public MainMenu(int x, int y) {
@@ -16,12 +16,24 @@ public class MainMenu {
     }
 
     public void update() {
-        if (KeyHandler.wKeyPress & currentOption == 0) {
+        if ((KeyHandler.wKeyPress 
+                || KeyHandler.sKeyPress
+                || KeyHandler.upKeyPress
+                || KeyHandler.downKeyPress) & currentOption == 0) {
             currentOption = 1;
             KeyHandler.wKeyPress=false;
-        } else if (KeyHandler.wKeyPress & currentOption == 1) {
+            KeyHandler.sKeyPress=false;
+            KeyHandler.upKeyPress=false;
+            KeyHandler.downKeyPress=false;
+        } else if ((KeyHandler.wKeyPress 
+                || KeyHandler.sKeyPress
+                || KeyHandler.upKeyPress
+                || KeyHandler.downKeyPress) & currentOption == 1) {
             currentOption = 0;
             KeyHandler.wKeyPress=false;
+            KeyHandler.sKeyPress=false;
+            KeyHandler.upKeyPress=false;
+            KeyHandler.downKeyPress=false;
         }
         selectedOption();
     }

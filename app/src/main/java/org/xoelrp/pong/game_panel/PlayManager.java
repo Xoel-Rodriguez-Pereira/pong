@@ -5,6 +5,7 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics2D;
 
+import org.xoelrp.pong.automata.Automata;
 import org.xoelrp.pong.objects.Ball;
 import org.xoelrp.pong.objects.Paddle;
 
@@ -31,6 +32,8 @@ public class PlayManager {
 
     private int leftScore;
     private int rightScore;
+
+    private Automata automata;
 
     public PlayManager() {
         left_x = 0;
@@ -62,6 +65,12 @@ public class PlayManager {
         if (!KeyHandler.paused) {
             checkColision();
 
+            if (automata != null) {
+                automata.move();
+            } else if (MainMenu.siglePlayer) {
+                setAutomata();
+            }
+
             if (KeyHandler.wKeyPress & !LPTopColision) {
                 leftPaddle.updateY(-movement);
                 KeyHandler.wKeyPress = false;
@@ -84,6 +93,10 @@ public class PlayManager {
         }
     } 
     
+    public void setAutomata() {
+        automata = new Automata(ball, rightPaddle);
+    }
+
     public void checkColision() {
         // Left Paddle
         if (leftPaddle.y - movement < top_y) {

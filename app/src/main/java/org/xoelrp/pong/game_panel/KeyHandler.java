@@ -20,12 +20,16 @@ public class KeyHandler implements KeyListener {
         if (code == KeyEvent.VK_S) {
             sKeyPress = true;
         }
-        if (code == KeyEvent.VK_UP) {
+
+        if (!MainMenu.siglePlayer) {
+            if (code == KeyEvent.VK_UP) {
             upKeyPress = true;
+            }
+            if (code == KeyEvent.VK_DOWN) {
+                downKeyPress = true;
+            }
         }
-        if (code == KeyEvent.VK_DOWN) {
-            downKeyPress = true;
-        }
+        
         if (code == KeyEvent.VK_ENTER) {
             enter = true;
         }
