@@ -4,6 +4,9 @@ import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics2D;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.random.RandomGenerator;
 
 import org.xoelrp.pong.automata.Automata;
 import org.xoelrp.pong.objects.Ball;
@@ -51,10 +54,7 @@ public class PlayManager {
 
         // Ball
         ball = new Ball();
-        ballSpeed = 3;
-        verticalDir = 1;
-        horizonalDir = -1;
-        ball.setXY(right_x / 2 + 5 * horizonalDir, bottom_y / 2);
+        setBallInitialPosition();
 
         // Score
         leftScore = 0;
@@ -96,7 +96,26 @@ public class PlayManager {
     public void setAutomata() {
         automata = new Automata(ball, rightPaddle);
     }
-
+    
+    void setBallInitialPosition() {
+        ArrayList<Integer> options = new ArrayList<>(Arrays.asList(-1, 1));
+        int verticalDisplacement = RandomGenerator.getDefault().nextInt(0, 100) 
+                                * options.get(RandomGenerator.getDefault().nextInt(0, options.size()));
+        ballSpeed = 6;
+        verticalDir = options.get(RandomGenerator.getDefault().nextInt(0, options.size()));
+        horizonalDir = options.get(RandomGenerator.getDefault().nextInt(0, options.size()));
+        ball.setXY(right_x / 2 + 5 * horizonalDir, bottom_y / 2 + verticalDisplacement);
+    }
+    void setBallInitialPosition(int horizonalDir, int verticalDir) {
+        ArrayList<Integer> options = new ArrayList<>(Arrays.asList(-1, 1));
+        int verticalDisplacement = RandomGenerator.getDefault().nextInt(0, 100) 
+                                * options.get(RandomGenerator.getDefault().nextInt(0, options.size()));
+        ballSpeed = 6;
+        this.verticalDir = verticalDir;
+        this.horizonalDir = horizonalDir;
+        ball.setXY(right_x / 2 + 5 * horizonalDir, bottom_y / 2 + verticalDisplacement);
+    }
+    
     public void checkColision() {
         // Left Paddle
         if (leftPaddle.y - movement < top_y) {
@@ -147,14 +166,12 @@ public class PlayManager {
         }
             // Against border
         if (ball.x + ball.d > right_x) {
-            horizonalDir = -1;
-            ballSpeed = 3;
+            setBallInitialPosition(-1, verticalDir);
             leftScore += 1;
             ball.setXY(right_x / 2 + 5 * horizonalDir, bottom_y / 2);
             GamePanel.soundEffect.play(2, false);
         } else if (ball.x - ball.d/2 < left_x) {
-            horizonalDir = 1;
-            ballSpeed = 3;
+            setBallInitialPosition(1, verticalDir);
             rightScore += 1;
             ball.setXY(right_x / 2 + 5 * horizonalDir, bottom_y / 2);
             GamePanel.soundEffect.play(2, false);

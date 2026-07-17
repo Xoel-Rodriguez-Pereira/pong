@@ -18,9 +18,9 @@ public class Automata {
 
     public void move() {
         if (actualFrame == REACTION_TIME) {
-            if (ball.y < paddle.y + 10) {
+            if (ball.y < paddle.y - 10) {
                 KeyHandler.upKeyPress = true;
-            } else if (ball.y > paddle.y - paddle.HEIGHT + 10) {
+            } else if (ball.y > paddle.y + paddle.HEIGHT + 10) {
                 KeyHandler.downKeyPress = true;
             }
             actualFrame = 0;
