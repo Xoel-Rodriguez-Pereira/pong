@@ -71,6 +71,8 @@ public class PlayManager {
                 setAutomata();
             }
 
+            bounceBall();
+
             if (KeyHandler.wKeyPress & !LPTopColision) {
                 leftPaddle.updateY(-movement);
                 KeyHandler.wKeyPress = false;
@@ -88,7 +90,6 @@ public class PlayManager {
                 KeyHandler.downKeyPress = false;
             } else {KeyHandler.downKeyPress = false;}
 
-            bounceBall();
             ball.updateXY(ballSpeed * horizonalDir, ballSpeed * verticalDir);
         }
     } 
@@ -99,7 +100,7 @@ public class PlayManager {
     
     void setBallInitialPosition() {
         ArrayList<Integer> options = new ArrayList<>(Arrays.asList(-1, 1));
-        int verticalDisplacement = RandomGenerator.getDefault().nextInt(0, 100) 
+        int verticalDisplacement = RandomGenerator.getDefault().nextInt(0, bottom_y / 2) 
                                 * options.get(RandomGenerator.getDefault().nextInt(0, options.size()));
         ballSpeed = 6;
         verticalDir = options.get(RandomGenerator.getDefault().nextInt(0, options.size()));
@@ -108,7 +109,7 @@ public class PlayManager {
     }
     void setBallInitialPosition(int horizonalDir, int verticalDir) {
         ArrayList<Integer> options = new ArrayList<>(Arrays.asList(-1, 1));
-        int verticalDisplacement = RandomGenerator.getDefault().nextInt(0, 100) 
+        int verticalDisplacement = RandomGenerator.getDefault().nextInt(0, bottom_y / 2) 
                                 * options.get(RandomGenerator.getDefault().nextInt(0, options.size()));
         ballSpeed = 6;
         this.verticalDir = verticalDir;
@@ -154,26 +155,66 @@ public class PlayManager {
         if (ball.x + ball.d + ballSpeed > rightPaddle.x 
                     & ball.y >= rightPaddle.y 
                     & ball.y <= rightPaddle.y + rightPaddle.HEIGHT) {
-            horizonalDir = -1;
-            ballSpeed += 1;
-            GamePanel.soundEffect.play(0, false);
+            if (KeyHandler.upKeyPress & verticalDir == -1) {
+                horizonalDir = -1;
+                ballSpeed += 2;
+                GamePanel.soundEffect.play(0, false);
+            } else if (KeyHandler.upKeyPress & verticalDir == 1) {
+                verticalDir = 0;
+                horizonalDir = -1;
+                ballSpeed -= 2;
+                GamePanel.soundEffect.play(0, false);
+            } else if (KeyHandler.downKeyPress & verticalDir == 1) {
+                horizonalDir = -1;
+                ballSpeed += 2;
+                GamePanel.soundEffect.play(0, false);
+            } else if (KeyHandler.downKeyPress & verticalDir == -1) {
+                verticalDir = 0;
+                horizonalDir = -1;
+                ballSpeed -= 2;
+                GamePanel.soundEffect.play(0, false);
+            } else {
+                if (verticalDir == 0) {verticalDir = 1;}
+                horizonalDir = -1;
+                ballSpeed += 1;
+                GamePanel.soundEffect.play(0, false);
+            }
+            
         } else if (ball.x - ball.d/2 - ballSpeed < leftPaddle.x + leftPaddle.WIDTH
                     & ball.y >= leftPaddle.y 
                     & ball.y <= leftPaddle.y + leftPaddle.HEIGHT) {
-            horizonalDir = 1;
-            ballSpeed += 1;
-            GamePanel.soundEffect.play(0, false);
+            if (KeyHandler.wKeyPress & verticalDir == -1) {
+                horizonalDir = 1;
+                ballSpeed += 2;
+                GamePanel.soundEffect.play(0, false);
+            } else if (KeyHandler.wKeyPress & verticalDir == 1) {
+                verticalDir = 0;
+                horizonalDir = 1;
+                ballSpeed -= 2;
+                GamePanel.soundEffect.play(0, false);
+            } else if (KeyHandler.sKeyPress & verticalDir == 1) {
+                horizonalDir = 1;
+                ballSpeed += 2;
+                GamePanel.soundEffect.play(0, false);
+            } else if (KeyHandler.sKeyPress & verticalDir == -1) {
+                verticalDir = 0;
+                horizonalDir = 1;
+                ballSpeed -= 2;
+                GamePanel.soundEffect.play(0, false);
+            } else {
+                horizonalDir = 1;
+                ballSpeed += 1;
+                GamePanel.soundEffect.play(0, false);
+            }
         }
             // Against border
         if (ball.x + ball.d > right_x) {
             setBallInitialPosition(-1, verticalDir);
             leftScore += 1;
-            ball.setXY(right_x / 2 + 5 * horizonalDir, bottom_y / 2);
             GamePanel.soundEffect.play(2, false);
         } else if (ball.x - ball.d/2 < left_x) {
             setBallInitialPosition(1, verticalDir);
             rightScore += 1;
-            ball.setXY(right_x / 2 + 5 * horizonalDir, bottom_y / 2);
             GamePanel.soundEffect.play(2, false);
         }
     }
