@@ -1,5 +1,7 @@
 package org.xoelrp.pong.game_panel;
 
+import java.awt.BasicStroke;
+import java.awt.Color;
 import java.awt.Graphics2D;
 
 import org.xoelrp.pong.objects.Paddle;
@@ -81,6 +83,12 @@ public class PlayManager {
     }
 
     public void draw(Graphics2D g2) {
+        // Draw middle line
+        g2.setColor(Color.WHITE);
+        float[] dashed = {HEIGHT / 20, HEIGHT / 20};
+        g2.setStroke(new BasicStroke(2f, BasicStroke.CAP_BUTT, BasicStroke.JOIN_MITER, 1f, dashed,0));
+        g2.drawLine(right_x / 2 - 1, top_y - HEIGHT / 40, right_x / 2 - 1, bottom_y);
+
         // Draw paddles
         if (leftPaddle != null) {
             leftPaddle.draw(g2);
