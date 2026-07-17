@@ -16,6 +16,7 @@ public class GamePanel extends JPanel implements Runnable {
     private volatile boolean isRunning = false;
 
     PlayManager playManager;
+    MainMenu mainMenu;
 
     public static Sound music = new Sound();
     public static Sound soundEffect = new Sound();
@@ -28,6 +29,7 @@ public class GamePanel extends JPanel implements Runnable {
         this.setLayout(null);
 
         playManager = new PlayManager();
+        mainMenu = new MainMenu(WIDTH, HEIGHT);
         
         this.addKeyListener(new KeyHandler());
         this.setFocusable(true);
@@ -66,13 +68,23 @@ public class GamePanel extends JPanel implements Runnable {
     }
 
     public void update() {
-        playManager.update();
+        if (mainMenu.selected) {
+            playManager.update();
+        }
+        else {
+            mainMenu.update();
+        }
     }
 
     @Override
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
         Graphics2D g2 = (Graphics2D) g;
-        playManager.draw(g2);
+        if (mainMenu.selected) {
+            playManager.draw(g2);
+        }
+        else {
+            mainMenu.draw(g2);
+        }
     }
 }
