@@ -112,8 +112,10 @@ public class PlayManager {
         // Vertical
         if (ball.y - ball.d/2 - ballSpeed < top_y) {
             verticalDir = 1;
+            GamePanel.soundEffect.play(1, false);
         } else if (ball.y + ball.d/2 + ballSpeed > bottom_y) {
             verticalDir = -1;
+            GamePanel.soundEffect.play(1, false);
         }
         // Horizontal
             // Against paddle
@@ -122,11 +124,13 @@ public class PlayManager {
                     & ball.y <= rightPaddle.y + rightPaddle.HEIGHT) {
             horizonalDir = -1;
             ballSpeed += 1;
+            GamePanel.soundEffect.play(0, false);
         } else if (ball.x - ball.d/2 - ballSpeed < leftPaddle.x + leftPaddle.WIDTH
                     & ball.y >= leftPaddle.y 
                     & ball.y <= leftPaddle.y + leftPaddle.HEIGHT) {
             horizonalDir = 1;
             ballSpeed += 1;
+            GamePanel.soundEffect.play(0, false);
         }
             // Against border
         if (ball.x + ball.d > right_x) {
@@ -134,11 +138,13 @@ public class PlayManager {
             ballSpeed = 3;
             leftScore += 1;
             ball.setXY(right_x / 2 + 5 * horizonalDir, bottom_y / 2);
+            GamePanel.soundEffect.play(2, false);
         } else if (ball.x - ball.d/2 < left_x) {
             horizonalDir = 1;
             ballSpeed = 3;
             rightScore += 1;
             ball.setXY(right_x / 2 + 5 * horizonalDir, bottom_y / 2);
+            GamePanel.soundEffect.play(2, false);
         }
     }
 

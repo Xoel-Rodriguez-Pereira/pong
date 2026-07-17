@@ -15,7 +15,9 @@ public class Sound {
     URL url[] = new URL[10];
 
     public Sound() {
-        url[0] = getClass().getResource("/resource_name");
+        url[0] = getClass().getResource("/paddleHit.wav");
+        url[1] = getClass().getResource("/wallsHit.wav");
+        url[2] = getClass().getResource("/score.wav");
     }
 
     public void play(int i, boolean music) {
